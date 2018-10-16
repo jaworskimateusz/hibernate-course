@@ -18,7 +18,7 @@ public class CreateCar {
 		Session session = factory.getCurrentSession();
 		
 		try {
-			realizeTransaction(session, createCar("Audi", "Black", "Hatchback"));
+			realizeTransaction(session, createCar("BMW", "Blue", "Hatchback"));
 		} catch(Exception e) {
 			e.printStackTrace();
 		} finally {
