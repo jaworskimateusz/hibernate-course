@@ -1,4 +1,4 @@
-package crud;
+package demo;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -6,7 +6,7 @@ import org.hibernate.cfg.Configuration;
 
 import entity.Student;
 
-public class ReadStudent {
+public class CreateStudent {
 
 	public static void main(String[] args) {
 
@@ -18,9 +18,9 @@ public class ReadStudent {
 		Session session = factory.getCurrentSession();
 		
 		try {
-			System.out.println("\nReading a student object.");
+			System.out.println("\nCreating new student object.");
 			session.beginTransaction();
-			System.out.println(getNewStudent(session, new Student(), 1));
+			session.save(new Student("Matthew", "Marschall", "matt@email.com"));
 			session.getTransaction().commit();
 			System.out.println("\nTransaction successful.");
 			
@@ -29,11 +29,6 @@ public class ReadStudent {
 		} finally {
 			factory.close();
 		}
-	}
-	private static String getNewStudent(Session session, Student student, int id) {
-		student = session.get(Student.class, id);
-		return (student != null) ? student.toString()
-				: "Student not found";
 	}
 
 }
