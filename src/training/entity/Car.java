@@ -3,12 +3,13 @@ package training.entity;
 import javax.persistence.*;
 
 @Entity
-@Table(name="cars")
+@Table(name="car")
 public class Car {
 	
 	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="id")
-	private int Id;
+	private int id;
 	
 	@Column(name="brand")
 	private String brand;
@@ -18,6 +19,10 @@ public class Car {
 	
 	@Column(name="body")
 	private String body;
+	
+	@OneToOne(cascade=CascadeType.ALL)
+	@JoinColumn(name="car_performance_id")
+	private CarPerformance carPerformance;
 	
 	public Car() {
 		
@@ -30,11 +35,11 @@ public class Car {
 	}
 
 	public int getId() {
-		return Id;
+		return id;
 	}
 
 	public void setId(int id) {
-		Id = id;
+		this.id = id;
 	}
 
 	public String getBrand() {
@@ -61,12 +66,20 @@ public class Car {
 		this.body = body;
 	}
 
+	public CarPerformance getCarPerformance() {
+		return carPerformance;
+	}
+
+	public void setCarPerformance(CarPerformance carPerformance) {
+		this.carPerformance = carPerformance;
+	}
+
 	@Override
 	public String toString() {
-		return "Car [Id=" + Id + 
-				", brand=" + brand + 
-				", color=" + color + 
-				", body=" + body + "]";
+		return "Car [id=" + id + ", brand=" + brand + 
+				", color=" + color + ", body=" + body + 
+				", carPerformance=" + carPerformance + "]";
 	}
+	
 	
 }
