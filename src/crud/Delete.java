@@ -7,8 +7,8 @@ import org.hibernate.cfg.Configuration;
 import entity.Instructor;
 import entity.InstructorDetail;
 import entity.Student;
-//one to one uni
-public class Create {
+
+public class Delete {
 
 	public static void main(String[] args) {
 
@@ -19,27 +19,25 @@ public class Create {
 				.buildSessionFactory();
 		
 		Session session = factory.getCurrentSession();
-		
+		Instructor instructor;
 		try {
 			session.beginTransaction();
-			Instructor instructor =
-					new Instructor("Done", "Joe", "don.joe@email.com");
-			
-			InstructorDetail instructorDetail = 
-					new InstructorDetail(
-							"http://www.coding.com/youtube",
-							"coding");
-			instructor.setInstructorDetail(instructorDetail);
-			session.save(instructor);
-			
+			instructor = session.get(Instructor.class, 4);
+			isNull(instructor, session);
 			session.getTransaction().commit();
 			System.out.println("\nTransaction successful.");
-			
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
 			factory.close();
 		}
 	}
-
+	
+	private static void isNull(Instructor instructor, Session session) {
+		if(instructor != null) {
+			session.delete(instructor);
+		} else {
+			System.out.println("Cannot found");
+		}
+	}
 }
