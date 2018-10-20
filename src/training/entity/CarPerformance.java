@@ -17,6 +17,10 @@ public class CarPerformance {
 	@Column(name="acceleration")
 	private int acceleration;
 	
+	@OneToOne(mappedBy="carPerformance", cascade= {CascadeType.DETACH, CascadeType.MERGE, 
+													CascadeType.PERSIST, CascadeType.REFRESH})
+	private Car car;
+	
 	public CarPerformance() {
 		
 	}
@@ -49,12 +53,20 @@ public class CarPerformance {
 	public void setAcceleration(int acceleration) {
 		this.acceleration = acceleration;
 	}
+	
+
+	public Car getCar() {
+		return car;
+	}
+
+	public void setCar(Car car) {
+		this.car = car;
+	}
 
 	@Override
 	public String toString() {
-		return "CarPerformance [id=" + id +
-				", horsepower=" + horsepower +
-				", acceleration=" + acceleration + "]";
+		return "CarPerformance [id=" + id + ", horsepower=" + horsepower + 
+				", acceleration=" + acceleration + ", car=" + car + "]";
 	}
 	
 }

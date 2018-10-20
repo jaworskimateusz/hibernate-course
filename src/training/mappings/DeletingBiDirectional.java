@@ -7,7 +7,7 @@ import org.hibernate.cfg.Configuration;
 import training.entity.Car;
 import training.entity.CarPerformance;
 
-public class App {
+public class DeletingBiDirectional {
 
 
 	public static void main(String[] args) {
@@ -19,15 +19,14 @@ public class App {
 				.buildSessionFactory();
 		
 		Session session = factory.getCurrentSession();
-		Car car;
 		CarPerformance carPerformance;
+		int id = getId();
 		
 		try {
 			session.beginTransaction();
-			car = new Car("Honda", "Yellow", "Cabrio");
-			carPerformance = new CarPerformance(220,7);
-			car.setCarPerformance(carPerformance);
-			session.save(car);
+			carPerformance = session.get(CarPerformance.class,id);
+			carPerformance.getCar().setCarPerformance(null);
+			deleteIfNotNull(carPerformance, session);
 			session.getTransaction().commit();
 			System.out.println("\nSuccesfull!");
 		} catch(Exception e) {
@@ -38,4 +37,15 @@ public class App {
 		
 	}
 
+	private static void deleteIfNotNull(CarPerformance carPerformance, Session session) {
+		if(carPerformance != null) {
+			session.delete(carPerformance);
+		} else {
+			System.out.println("Cannot found.");
+		}
+	}
+
+	private static int getId() {
+		return 6;
+	}
 }
