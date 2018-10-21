@@ -6,8 +6,9 @@ import org.hibernate.cfg.Configuration;
 
 import training.entity.Car;
 import training.entity.CarPerformance;
+import training.entity.Rim;
 
-public class App {
+public class DeleteRim {
 
 
 	public static void main(String[] args) {
@@ -16,18 +17,15 @@ public class App {
 				.configure("hibernate.cfg.xml")
 				.addAnnotatedClass(Car.class)
 				.addAnnotatedClass(CarPerformance.class)
+				.addAnnotatedClass(Rim.class)
 				.buildSessionFactory();
 		
 		Session session = factory.getCurrentSession();
-		Car car;
-		CarPerformance carPerformance;
+		
 		
 		try {
 			session.beginTransaction();
-			car = new Car("Aston Martin", "Silver", "Hatchback");
-			carPerformance = new CarPerformance(420,5);
-			car.setCarPerformance(carPerformance);
-			session.save(car);
+			session.createQuery("DELETE FROM Rim WHERE inches=15").executeUpdate();
 			session.getTransaction().commit();
 			System.out.println("\nSuccesfull!");
 		} catch(Exception e) {

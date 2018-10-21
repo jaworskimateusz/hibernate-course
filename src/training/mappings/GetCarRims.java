@@ -6,8 +6,9 @@ import org.hibernate.cfg.Configuration;
 
 import training.entity.Car;
 import training.entity.CarPerformance;
+import training.entity.Rim;
 
-public class App {
+public class GetCarRims {
 
 
 	public static void main(String[] args) {
@@ -16,26 +17,35 @@ public class App {
 				.configure("hibernate.cfg.xml")
 				.addAnnotatedClass(Car.class)
 				.addAnnotatedClass(CarPerformance.class)
+				.addAnnotatedClass(Rim.class)
 				.buildSessionFactory();
 		
 		Session session = factory.getCurrentSession();
-		Car car;
-		CarPerformance carPerformance;
+		int id = 2;
 		
 		try {
 			session.beginTransaction();
-			car = new Car("Aston Martin", "Silver", "Hatchback");
-			carPerformance = new CarPerformance(420,5);
-			car.setCarPerformance(carPerformance);
-			session.save(car);
+			Car car = session.get(Car.class, id);
+			printRims(car);
 			session.getTransaction().commit();
 			System.out.println("\nSuccesfull!");
 		} catch(Exception e) {
 			e.printStackTrace();
 		} finally {
 			session.close();
+			factory.close();
 		}
 		
+	}
+	
+	private static void printRims(Car car) {
+		if(car != null) {
+			for(Rim rim : car.getRims()) {
+				System.out.println("\n" + rim);
+			}
+		} else {
+			System.out.println("Cannot found");
+		}
 	}
 
 }

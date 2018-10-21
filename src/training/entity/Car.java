@@ -1,9 +1,12 @@
 package training.entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.*;
 
 @Entity
-@Table(name="car")
+@Table(name="cars")
 public class Car {
 	
 	@Id
@@ -23,6 +26,9 @@ public class Car {
 	@OneToOne(cascade=CascadeType.ALL)
 	@JoinColumn(name="car_performance_id")
 	private CarPerformance carPerformance;
+	
+	@OneToMany(mappedBy="car")
+	private List<Rim> rims;
 	
 	public Car() {
 		
@@ -72,6 +78,22 @@ public class Car {
 
 	public void setCarPerformance(CarPerformance carPerformance) {
 		this.carPerformance = carPerformance;
+	}
+
+	public List<Rim> getRims() {
+		return rims;
+	}
+
+	public void setRims(List<Rim> rims) {
+		this.rims = rims;
+	}
+	
+	public void addRim(Rim rim) {
+		if(rim != null) {
+			rims = new ArrayList<Rim>();
+			rims.add(rim);
+			rim.setCar(this);
+		}
 	}
 
 	@Override
