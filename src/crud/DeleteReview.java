@@ -10,7 +10,7 @@ import entity.InstructorDetail;
 import entity.Review;
 import entity.Student;
 //one to many
-public class CreateInstructor {
+public class DeleteReview {
 
 	public static void main(String[] args) {
 
@@ -26,24 +26,25 @@ public class CreateInstructor {
 		
 		try {
 			session.beginTransaction();
-			Instructor instructor =
-					new Instructor("Chad", "Darby", "chad.darby@yahoo.com");
 			
-			InstructorDetail instructorDetail = 
-					new InstructorDetail(
-							"http://www.luv2code.com/youtube",
-							"coding");
-			instructor.setInstructorDetail(instructorDetail);
-			session.save(instructor);
-			
+			Review review = session.get(Review.class, 15);
+			deleteReview(review, session);
 			session.getTransaction().commit();
-			System.out.println("\nTransaction successful.");
 			
+			System.out.println("\nTransaction successful.");
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
 			session.close();
 			factory.close();
+		}
+	}
+	
+	private static void deleteReview(Review review, Session session) {
+		if(review != null) {
+			session.delete(review);
+		} else {
+			System.out.println("Not found.");
 		}
 	}
 

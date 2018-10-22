@@ -10,7 +10,7 @@ import entity.InstructorDetail;
 import entity.Review;
 import entity.Student;
 //one to many
-public class CreateInstructor {
+public class CreateCourseAndReviews {
 
 	public static void main(String[] args) {
 
@@ -26,19 +26,17 @@ public class CreateInstructor {
 		
 		try {
 			session.beginTransaction();
-			Instructor instructor =
-					new Instructor("Chad", "Darby", "chad.darby@yahoo.com");
 			
-			InstructorDetail instructorDetail = 
-					new InstructorDetail(
-							"http://www.luv2code.com/youtube",
-							"coding");
-			instructor.setInstructorDetail(instructorDetail);
-			session.save(instructor);
+			Course javaCourse = new Course("Spring & Hibernate for beginners");
 			
+			javaCourse.addReview(new Review("The best tutorial on the Udemy!"));
+			javaCourse.addReview(new Review("Job well done, now I understand it!"));
+			javaCourse.addReview(new Review("I've started my first job thanks to this awesome course."));
+			
+			session.save(javaCourse);
 			session.getTransaction().commit();
-			System.out.println("\nTransaction successful.");
 			
+			System.out.println("\nTransaction successful.");
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
