@@ -6,6 +6,8 @@ import org.hibernate.cfg.Configuration;
 
 import training.entity.Car;
 import training.entity.CarPerformance;
+import training.entity.Rim;
+import training.entity.Tire;
 
 public class App {
 
@@ -16,6 +18,8 @@ public class App {
 				.configure("hibernate.cfg.xml")
 				.addAnnotatedClass(Car.class)
 				.addAnnotatedClass(CarPerformance.class)
+				.addAnnotatedClass(Rim.class)
+				.addAnnotatedClass(Tire.class)
 				.buildSessionFactory();
 		
 		Session session = factory.getCurrentSession();
@@ -24,8 +28,8 @@ public class App {
 		
 		try {
 			session.beginTransaction();
-			car = new Car("Aston Martin", "Silver", "Hatchback");
-			carPerformance = new CarPerformance(420,5);
+			car = new Car("Audi", "White", "Sedan");
+			carPerformance = new CarPerformance(180,8);
 			car.setCarPerformance(carPerformance);
 			session.save(car);
 			session.getTransaction().commit();

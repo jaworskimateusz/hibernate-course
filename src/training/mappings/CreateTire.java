@@ -9,7 +9,7 @@ import training.entity.CarPerformance;
 import training.entity.Rim;
 import training.entity.Tire;
 
-public class CreateRim {
+public class CreateTire {
 
 
 	public static void main(String[] args) {
@@ -27,9 +27,12 @@ public class CreateRim {
 		
 		try {
 			session.beginTransaction();
-			Car car = session.get(Car.class, 1);
-			Rim rim = new Rim(18);
-			car.addRim(rim);
+			
+			Rim rim = session.get(Rim.class, 10);
+			Tire tire = new Tire("Sparco");
+			//I should check if tire != null...
+			rim.addTire(tire);
+			//I may only save rim, since cascade=CascadeType.ALL automatically saves tire
 			session.save(rim);
 			session.getTransaction().commit();
 			System.out.println("\nSuccesfull!");
