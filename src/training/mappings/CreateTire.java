@@ -6,6 +6,7 @@ import org.hibernate.cfg.Configuration;
 
 import training.entity.Car;
 import training.entity.CarPerformance;
+import training.entity.CarService;
 import training.entity.Rim;
 import training.entity.Tire;
 
@@ -20,6 +21,7 @@ public class CreateTire {
 				.addAnnotatedClass(CarPerformance.class)
 				.addAnnotatedClass(Rim.class)
 				.addAnnotatedClass(Tire.class)
+				.addAnnotatedClass(CarService.class)
 				.buildSessionFactory();
 		
 		Session session = factory.getCurrentSession();
@@ -28,7 +30,7 @@ public class CreateTire {
 		try {
 			session.beginTransaction();
 			
-			Rim rim = session.get(Rim.class, 10);
+			Rim rim = session.get(Rim.class, 100);
 			Tire tire = new Tire("Sparco");
 			//I should check if tire != null...
 			rim.addTire(tire);

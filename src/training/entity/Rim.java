@@ -6,7 +6,7 @@ import java.util.List;
 import javax.persistence.*;
 
 @Entity
-@Table(name="rim")
+@Table(name="rims")
 public class Rim {
 
 	@Id

@@ -10,7 +10,7 @@ import training.entity.CarService;
 import training.entity.Rim;
 import training.entity.Tire;
 
-public class App {
+public class AddCarToCarService {
 
 
 	public static void main(String[] args) {
@@ -26,14 +26,15 @@ public class App {
 		
 		Session session = factory.getCurrentSession();
 		Car car;
-		CarPerformance carPerformance;
+		CarService carService;
 		
 		try {
 			session.beginTransaction();
 			car = new Car("Aston Martin", "Silver", "Coupe");
-			carPerformance = new CarPerformance(340,6);
-			car.setCarPerformance(carPerformance);
 			session.save(car);
+			carService = new CarService("The Fasters", "Green Street 1", 512412523);
+			carService.addCarToService(car);
+			session.save(carService);
 			session.getTransaction().commit();
 			System.out.println("\nSuccesfull!");
 		} catch(Exception e) {

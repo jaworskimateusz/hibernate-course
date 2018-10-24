@@ -30,6 +30,14 @@ public class Car {
 	@OneToMany(mappedBy="car")
 	private List<Rim> rims;
 	
+	@OneToMany(fetch=FetchType.LAZY,
+			   cascade= {CascadeType.DETACH, CascadeType.MERGE,
+					   	 CascadeType.PERSIST, CascadeType.REFRESH})
+	@JoinTable(name="service_car",
+				joinColumns=@JoinColumn(name="car_id"),
+				inverseJoinColumns=@JoinColumn(name="service_id"))
+	private List<CarService> carServices;
+	
 	public Car() {
 		
 	}
@@ -91,9 +99,24 @@ public class Car {
 	public void addRim(Rim rim) {
 		if(rim != null) {
 			rims = new ArrayList<Rim>();
-			rims.add(rim);
-			rim.setCar(this);
 		}
+		rims.add(rim);
+		rim.setCar(this);
+	}
+
+	public List<CarService> getCarServices() {
+		return carServices;
+	}
+
+	public void setCarServices(List<CarService> carServices) {
+		this.carServices = carServices;
+	}
+	
+	public void addCarService(CarService carService) {
+		if(carServices == null) {
+			carServices = new ArrayList<>();
+		}
+		carServices.add(carService);
 	}
 
 	@Override
@@ -102,6 +125,5 @@ public class Car {
 				", color=" + color + ", body=" + body + 
 				", carPerformance=" + carPerformance + "]";
 	}
-	
 	
 }

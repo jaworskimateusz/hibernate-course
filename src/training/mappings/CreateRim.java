@@ -6,6 +6,7 @@ import org.hibernate.cfg.Configuration;
 
 import training.entity.Car;
 import training.entity.CarPerformance;
+import training.entity.CarService;
 import training.entity.Rim;
 import training.entity.Tire;
 
@@ -20,6 +21,7 @@ public class CreateRim {
 				.addAnnotatedClass(CarPerformance.class)
 				.addAnnotatedClass(Rim.class)
 				.addAnnotatedClass(Tire.class)
+				.addAnnotatedClass(CarService.class)
 				.buildSessionFactory();
 		
 		Session session = factory.getCurrentSession();
@@ -28,7 +30,7 @@ public class CreateRim {
 		try {
 			session.beginTransaction();
 			Car car = session.get(Car.class, 1);
-			Rim rim = new Rim(18);
+			Rim rim = new Rim(19);
 			car.addRim(rim);
 			session.save(rim);
 			session.getTransaction().commit();
