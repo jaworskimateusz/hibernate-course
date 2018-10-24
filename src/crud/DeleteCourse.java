@@ -10,7 +10,7 @@ import entity.InstructorDetail;
 import entity.Review;
 import entity.Student;
 //one to many
-public class CreateCourseAndReviews {
+public class DeleteCourse {
 
 	public static void main(String[] args) {
 
@@ -20,28 +20,30 @@ public class CreateCourseAndReviews {
 				.addAnnotatedClass(InstructorDetail.class)
 				.addAnnotatedClass(Course.class)
 				.addAnnotatedClass(Review.class)
+				.addAnnotatedClass(Student.class)
 				.buildSessionFactory();
 		
 		Session session = factory.getCurrentSession();
-		
+		int id = 12;
 		try {
 			session.beginTransaction();
-			
-			Course javaCourse = new Course("Spring & Hibernate for beginners");
-			
-			javaCourse.addReview(new Review("The best tutorial on the Udemy!"));
-			javaCourse.addReview(new Review("Job well done, now I understand it!"));
-			javaCourse.addReview(new Review("I've started my first job thanks to this awesome course."));
-			
-			session.save(javaCourse);
+			Course course = session.get(Course.class, id);
+			deleteCourse(course, session);
 			session.getTransaction().commit();
-			
 			System.out.println("\nTransaction successful.");
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
 			session.close();
 			factory.close();
+		}
+	}
+
+	private static void deleteCourse(Course course, Session session) {
+		if(course != null) {
+			session.delete(course);
+		} else {
+			System.out.println("Cannot found");
 		}
 	}
 
